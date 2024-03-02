@@ -8,7 +8,8 @@ body {
   font-family: "Arial", sans-serif;
 }
 /******* Header CSS ***************/
-a {
+#tools a,
+.siteName a {
   text-decoration: none;
   color: #000;
 }
@@ -54,6 +55,29 @@ nav ul li {
   list-style: none;
   margin: 0 3px;
 }
+*/ .topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04aa6d;
+  color: white;
+}
 
 /******* Index CSS ***************/
 .hero {
@@ -79,7 +103,9 @@ h2 {
   font-size: 0.9rem;
   font-weight: 600;
 }
-
+.call-to-action img {
+  width: 70%;
+}
 .own-today {
   background-image: url("../images/site/own_today.jpg");
   background-position: center;
@@ -110,6 +136,31 @@ h2 {
   margin-bottom: 1rem;
 }
 
+.upgrades-card div {
+  position: relative;
+}
+
+.upgrades-card img {
+  display: block;
+  margin: 0 auto;
+}
+
+.upgrades-card span {
+  background-color: #01b0d3;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  height: 5rem;
+}
+
+.upgrades-card a {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/*********** Large Screen ***************/
+
 @media screen and (min-width: 700px) {
   body {
     background-image: url("../images/site/small_check.jpg");
@@ -127,12 +178,12 @@ h2 {
   }
   .large-screen {
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 30px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
   }
 
-  .upgrades {
+  .upgrades .upgrades {
     grid-column: 1 / span 1; /* Starts at column line 1, spans 1 column */
     grid-row: 1; /* Occupies row 1 */
   }
@@ -140,5 +191,9 @@ h2 {
   .reviews {
     grid-column: 2 / span 1; /* Starts at column line 2, spans 1 column */
     grid-row: 1; /* Occupies row 1 */
+  }
+
+  .reviews li {
+    margin-bottom: 1.3rem;
   }
 }
