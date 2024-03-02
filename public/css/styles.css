@@ -108,6 +108,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 8px;
+  width: 100%;
 }
 
 .upgrades-card section {
