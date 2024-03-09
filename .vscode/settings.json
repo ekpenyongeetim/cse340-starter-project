@@ -1,4 +1,18 @@
 {
   "html.autoClosingTags": false,
-  "json.schemas": []
+  "json.schemas": [],
+  "sqltools.connections": [
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": true
+        }
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "render.com",
+      "connectString": "postgres://ekpes:sBE71sW4Fetuc1bbVldUEIAeMJpTFmFg@dpg-cnj22rfsc6pc73d38vp0-a.oregon-postgres.render.com/ekpes"
+    }
+  ]
 }
