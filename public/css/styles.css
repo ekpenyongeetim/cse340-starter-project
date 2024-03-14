@@ -57,6 +57,12 @@ nav ul li {
   margin: 0 3px;
 }
 
+nav a:hover {
+  color: #000;
+  background-color: #fff;
+  padding: 15px 10px;
+}
+
 /******* Index CSS ***************/
 .hero {
   background-image: url("../images/vehicles/delorean.jpg");
