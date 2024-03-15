@@ -28,7 +28,7 @@ Util.getNav = async function (req, res, next) {
  * Build the classification view HTML
  * ************************************ */
 Util.buildClassificationGrid = async function (data) {
-  let grid;
+  let grid = "";
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
     data.forEach((vehicle) => {
@@ -41,7 +41,7 @@ Util.buildClassificationGrid = async function (data) {
         " " +
         vehicle.inv_model +
         'details"><img src="' +
-        vehicle.inv_thumbnail +
+        insertSlash(vehicle.inv_thumbnail) + // Call function to insert slash
         '" alt="Image of ' +
         vehicle.inv_make +
         " " +
@@ -76,5 +76,10 @@ Util.buildClassificationGrid = async function (data) {
   }
   return grid;
 };
+
+// Function to insert a forward slash (/) between "vehicle" and "thumbnail" in the image URLs
+function insertSlash(url) {
+  return url.replace("/vehicles", "/vehicles/");
+}
 
 module.exports = Util;

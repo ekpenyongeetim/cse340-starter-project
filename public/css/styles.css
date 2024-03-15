@@ -144,6 +144,31 @@ h2 {
   margin-top: 10px;
 }
 
+/*********** Custom Display ***************/
+
+#inv-display {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  text-decoration: none;
+  list-style-type: none;
+  padding: 0;
+}
+
+#inv-display li {
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  width: 300px;
+  height: auto;
+  text-align: center;
+}
+
+#inv-display img {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
+}
 /*********** Large Screen ***************/
 
 @media screen and (min-width: 700px) {
