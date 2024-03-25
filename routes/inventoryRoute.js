@@ -6,4 +6,7 @@ const invController = require("../controllers/invController");
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
 
+// build and post the classification to the nav
+router.get("/add-classification", invController.buildAddClassification);
+
 module.exports = router;

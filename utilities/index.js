@@ -77,9 +77,64 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
+/* ************************
+ * Constructs the nav HTML unordered list
+ ************************** */
+Util.getQuoteVehicle = async function (req, res, next) {
+  let data = await invModel.getInventoryVehicle();
+  let list =
+    "<label>Vehicle: <br><input list='quote_model' name='quote_model' placeholder = 'Choose a Vehicle' autocomplete='off'></label><br><br>";
+  list += "<datalist id='quote_model'>";
+  data.rows.forEach((row) => {
+    list += "<option value=" + row.inv_model + ">";
+    list += "</option>";
+  });
+  list += "</datalist>";
+  return list;
+};
+
+Util.formatInventoryItemHTML = function (item) {
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = item;
+
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(inv_price);
+  const formattedMiles = new Intl.NumberFormat().format(inv_miles);
+
+  return `
+    <div class="vehicle-details">
+      <h2>${inv_make} ${inv_model}</h2>
+      <img src="${inv_image}" alt="${inv_make} ${inv_model}">
+      <p>Year: ${inv_year}</p>
+      <p>Description: ${inv_description}</p>
+      <p>Price: ${formattedPrice}</p>
+      <p>Mileage: ${formattedMiles} miles</p>
+      <p>Color: ${inv_color}</p>
+    </div>
+  `;
+};
+
 // Function to insert a forward slash (/) between "vehicle" and "thumbnail" in the image URLs
 function insertSlash(url) {
   return url.replace("/vehicles", "/vehicles/");
 }
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
 
 module.exports = Util;

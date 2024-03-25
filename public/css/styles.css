@@ -157,6 +157,8 @@ h2 {
 }
 
 #inv-display li {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   border: 1px solid #bbb;
   border-radius: 5px;
   width: 300px;
@@ -168,6 +170,14 @@ h2 {
   width: 100%;
   overflow: hidden;
   border-radius: 5px 5px 0 0;
+}
+
+.namePrice {
+  padding-bottom: 1.5rem;
+  border-top: 4px solid #000;
+}
+hr {
+  display: none;
 }
 /*********** Large Screen ***************/
 

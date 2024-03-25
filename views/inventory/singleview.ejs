@@ -1,0 +1,11 @@
+<!-- we are creating the title value in the controller and passing it as a name-value pair to the view -->
+
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<!-- It is not uncommon to need to display messages in a view, for example, if an error occurs -->
+<%# messages() %>
+
+<!-- This code block is the main content delivery mechanism for the view -->
+<%- grid %> <%= itemHTML %>
