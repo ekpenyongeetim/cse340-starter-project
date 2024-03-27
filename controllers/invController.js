@@ -39,15 +39,18 @@ invCont.getInventoryItemDetail = async (req, res) => {
 // Controller function to handle requests for the single view of a specific inventory item
 invCont.getSingleView = async (req, res) => {
   try {
-    const inv_id = req.params.id;
+    const inv_id = req.params.inventoryId;
     const inventoryItem = await invModel.getInventoryById(inv_id);
+    console.log(inventoryItem);
     if (!inventoryItem) {
       return res.status(404).send("Inventory item not found");
     }
-    const formattedHTML = Util.formatInventoryItemHTML(inventoryItem); // Format the inventory item to HTML
+    let nav = await utilities.getNav();
+    const formattedHTML = utilities.formatInventoryItemHTML(inventoryItem); // Format the inventory item to HTML
     res.render("inventory/singleview", {
       title: `${inventoryItem.inv_make} ${inventoryItem.inv_model}`, // Set the title of the view
-      itemHTML: formattedHTML, // Pass the formatted HTML to the view
+      formattedHTML, // Pass the formatted HTML to the view
+      nav, // pas the nav variable into ejs
     });
   } catch (error) {
     console.error("Error fetching inventory item:", error);

@@ -41,7 +41,7 @@ Util.buildClassificationGrid = async function (data) {
         " " +
         vehicle.inv_model +
         'details"><img src="' +
-        insertSlash(vehicle.inv_thumbnail) + // Call function to insert slash
+        vehicle.inv_thumbnail +
         '" alt="Image of ' +
         vehicle.inv_make +
         " " +
@@ -110,24 +110,22 @@ Util.formatInventoryItemHTML = function (item) {
     currency: "USD",
   }).format(inv_price);
   const formattedMiles = new Intl.NumberFormat().format(inv_miles);
-
-  return `
-    <div class="vehicle-details">
-      <h2>${inv_make} ${inv_model}</h2>
-      <img src="${inv_image}" alt="${inv_make} ${inv_model}">
-      <p>Year: ${inv_year}</p>
-      <p>Description: ${inv_description}</p>
-      <p>Price: ${formattedPrice}</p>
-      <p>Mileage: ${formattedMiles} miles</p>
-      <p>Color: ${inv_color}</p>
-    </div>
-  `;
+  let html = '<div class="vehicle-details">';
+  html += `<h2>${inv_make} ${inv_model}</h2>`;
+  html += `<img src="${inv_image}" alt="${inv_make} ${inv_model}">`;
+  html += `<p>Year: ${inv_year}</p>`;
+  html += `<p>Description: ${inv_description}</p>`;
+  html += `<p>Price: ${formattedPrice}</p>`;
+  html += `<p>Mileage: ${formattedMiles} miles</p>`;
+  html += `<p>Color: ${inv_color}</p>`;
+  html += `</div>`;
+  return html;
 };
 
 // Function to insert a forward slash (/) between "vehicle" and "thumbnail" in the image URLs
-function insertSlash(url) {
-  return url.replace("/vehicles", "/vehicles/");
-}
+//function insertSlash(url) {
+//return url.replace("/vehicles", "/vehicles/");
+//}
 
 /* ****************************************
  * Middleware For Handling Errors
