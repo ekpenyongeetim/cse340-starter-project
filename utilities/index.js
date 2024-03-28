@@ -111,13 +111,15 @@ Util.formatInventoryItemHTML = function (item) {
   }).format(inv_price);
   const formattedMiles = new Intl.NumberFormat().format(inv_miles);
   let html = '<div class="vehicle-details">';
-  html += `<h2>${inv_make} ${inv_model}</h2>`;
   html += `<img src="${inv_image}" alt="${inv_make} ${inv_model}">`;
+  html += `<div class="vehicle-description">`;
+  html += `<h2>${inv_make} ${inv_model}</h2>`;
   html += `<p>Year: ${inv_year}</p>`;
-  html += `<p>Description: ${inv_description}</p>`;
+  html += `<p class="description">Description: ${inv_description}</p>`;
   html += `<p>Price: ${formattedPrice}</p>`;
   html += `<p>Mileage: ${formattedMiles} miles</p>`;
   html += `<p>Color: ${inv_color}</p>`;
+  html += `</div>`;
   html += `</div>`;
   return html;
 };

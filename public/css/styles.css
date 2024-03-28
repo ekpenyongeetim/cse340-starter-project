@@ -179,6 +179,20 @@ h2 {
 hr {
   display: none;
 }
+
+/*********** Single view ***************/
+
+.vehicle-details {
+  display: block;
+
+  img {
+    width: 100%;
+  }
+}
+
+.description {
+  padding: 10px 2px;
+}
 /*********** Large Screen ***************/
 
 @media screen and (min-width: 700px) {
@@ -215,5 +229,10 @@ hr {
 
   .reviews li {
     margin-bottom: 1.3rem;
+  }
+
+  .vehicle-details {
+    display: flex;
+    gap: 10px;
   }
 }
