@@ -1,0 +1,28 @@
+<!-- views/login/login.ejs -->
+<h1><%- title %></h1>
+<%- messages() %>
+<div class="login">
+  <form action="/login" method="post">
+    <label for="account_email">Email:</label>
+    <input
+      type="email"
+      id="account_email"
+      name="account_email"
+      required
+      placeholder="Enter a valid email address"
+    />
+    <br />
+    <label for="account_password">Password:</label>
+    <input
+      type="password"
+      id="account_password"
+      name="account_password"
+      required
+      placeholder="Password"
+    />
+
+    <br />
+    <button type="submit">Login</button>
+    <p class="signup">No account? <a href="/account/register">Sign-up</a></p>
+  </form>
+</div>

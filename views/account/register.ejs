@@ -1,0 +1,63 @@
+<!-- views/account/registration.ejs -->
+<h1><%- title %></h1>
+<%- messages() %>
+<div class="register">
+  <form action="/account/register" method="post">
+    <label for="account_firstname">First Name:</label>
+    <input
+      type="text"
+      id="account_firstname"
+      name="account_firstname"
+      required
+    />
+    <br />
+    <label for="account_lastname">Last Name:</label>
+    <input type="text" id="account_lastname" name="account_lastname" required />
+    <br />
+    <label for="account_email">Email:</label>
+    <input
+      type="email"
+      id="account_email"
+      name="account_email"
+      required
+      placeholder="Enter a valid email address"
+    />
+    <br />
+    <label for="account_password">Password:</label>
+    <div class="pas-toggle-cont">
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      />
+      <br />
+      <span id="pswBtn">👁️</span>
+    </div>
+    <div class="password-warnings">
+      Password must be:
+      <ul>
+        <li>12 Characters in length, minimum</li>
+        <li>contain at least one capital letter</li>
+        <li>constain at least one numberm</li>
+        <li>contain at least one special character</li>
+      </ul>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+</div>
+
+<script>
+  const pswBtn = document.querySelector("#pswBtn");
+  pswBtn.addEventListener("click", function () {
+    const pswdInput = document.getElementById("account_password");
+    if (pswdInput.type === "password") {
+      pswdInput.type = "text";
+      pswBtn.textContent = "🔒";
+    } else {
+      pswdInput.type = "password";
+      pswBtn.textContent = "👁️";
+    }
+  });
+</script>
