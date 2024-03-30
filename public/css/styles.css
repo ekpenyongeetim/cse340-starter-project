@@ -33,10 +33,19 @@ body {
   font-weight: 600;
 }
 
-.notice {
+.notice,
+.notice-list {
   list-style-type: none;
   padding: 10px;
   text-align: center;
+}
+
+.notice-list {
+  background-color: #f4e409;
+  width: 100%;
+  color: #c36f09;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 header {

@@ -1,6 +1,12 @@
 <!-- views/account/registration.ejs -->
 <h1><%- title %></h1>
-<%- messages() %>
+<% if (errors) { %>
+<ul class="notice-list">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
 <div class="register">
   <form action="/account/register" method="post">
     <label for="account_firstname">First Name:</label>
@@ -9,10 +15,19 @@
       id="account_firstname"
       name="account_firstname"
       required
+      placeholder="First Name"
+      value="<%= locals.account_firstname %>"
     />
     <br />
     <label for="account_lastname">Last Name:</label>
-    <input type="text" id="account_lastname" name="account_lastname" required />
+    <input
+      type="text"
+      id="account_lastname"
+      name="account_lastname"
+      required
+      placeholder="Last Name"
+      value="<%= locals.account_firstname %>"
+    />
     <br />
     <label for="account_email">Email:</label>
     <input
@@ -20,6 +35,7 @@
       id="account_email"
       name="account_email"
       required
+      value="<%= locals.account_email %>"
       placeholder="Enter a valid email address"
     />
     <br />
@@ -30,6 +46,7 @@
         id="account_password"
         name="account_password"
         required
+        placeholder="Password"
         pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
       />
       <br />
