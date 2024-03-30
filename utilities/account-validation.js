@@ -76,4 +76,131 @@ validate.checkRegData = async (req, res, next) => {
   next();
 };
 
+/*  **********************************
+ *  Registration Add Classification Data Validation Rules
+ * ********************************* */
+validate.registationAddClassification = () => {
+  return [
+    // firstname is required and must be string
+    body("classification_name")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a Classification Name. Min 3 characters"), // on error this message is sent.
+  ];
+};
+
+/* ******************************
+ * Check data Add Classification and return errors or continue to registration
+ * ***************************** */
+validate.checkAddClassification = async (req, res, next) => {
+  const { classification_name } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      errors,
+      title: "Add New Classification",
+      nav,
+      classification_name,
+    });
+    return;
+  }
+  next();
+};
+/*  **********************************
+ *  Registration Add New Vehicle Data Validation Rules
+ * ********************************* */
+validate.registationAddNewVehicle = () => {
+  return [
+    // market is required and must be string
+    body("inv_make")
+      .trim()
+      .isLength({ min: 3, max: 10 })
+      .withMessage("Please provide a make."), // on error this message is sent.
+
+    // model is required and must be string
+    body("inv_model")
+      .trim()
+      .isLength({ min: 3, max: 10 })
+      .withMessage("Please provide a model."), // on error this message is sent.
+
+    // image large is required and must be string
+    body("inv_image")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a Image Path."), // on error this message is sent.
+
+    // image short large is required and must be string
+    body("inv_thumbnail")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a Thumbnail Path."), // on error this message is sent.
+
+    // price is required and must be integer
+    body("inv_price")
+      .trim()
+      .isInt()
+      .isLength({ min: 3, max: 10 })
+      .withMessage("Please provide a price."), // on error this message is sent.
+
+    // year is required and must be integer
+    body("inv_year")
+      .trim()
+      .isInt()
+      .isLength(4)
+      .withMessage("Please provide a year."), // on error this message is sent.
+
+    // miles is required and must be integer
+    body("inv_miles")
+      .trim()
+      .isInt()
+      .isLength({ min: 3, max: 10 })
+      .withMessage("Please provide a miles."), // on error this message is sent.
+
+    // color is required and must be string
+    body("inv_color")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a color."), // on error this message is sent.
+  ];
+};
+/* ******************************
+ * Check data  Add New Vehicle and return errors or continue to registration
+ * ***************************** */
+validate.checkAddNewVehicle = async (req, res, next) => {
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    let grid = await utilities.getClassificationId();
+    res.render("inventory/add-inventory", {
+      errors,
+      title: "Add New Vehicle",
+      nav,
+      grid,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;
