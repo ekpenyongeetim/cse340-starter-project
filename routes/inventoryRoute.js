@@ -16,5 +16,14 @@ router.post(
   invController.addClassification
 );
 
+// create and pos the inventory
+router.get("/add-inventory", invController.addInventoryGet);
+router.post(
+  "/add-inventory",
+  regValidate.registationAddNewVehicle(),
+  regValidate.checkAddNewVehicle,
+  invController.addInventoryPost
+);
+
 router.get("/detail/:inventoryId", invController.getSingleView);
 module.exports = router;

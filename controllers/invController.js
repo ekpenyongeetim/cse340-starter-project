@@ -9,6 +9,16 @@ const invCont = {};
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId;
   const data = await invModel.getInventoryByClassificationId(classification_id);
+
+  // Check if data is empty or undefined
+  if (!data || data.length === 0) {
+    // Handle the case when there is no data
+    // For example, you can render an error message or redirect to another page
+    return res
+      .status(404)
+      .send("No data found for the given classification ID");
+  }
+
   const grid = await utilities.buildClassificationGrid(data);
   let nav = await utilities.getNav();
   const className = data[0].classification_name;
@@ -100,6 +110,63 @@ invCont.addClassification = async function (req, res, next) {
       res.render("inventory/add-classification", {
         nav,
         title: "Add Classification",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+invCont.addInventoryGet = async function (req, res, next) {
+  try {
+    let dropdown = await utilities.buildClassificationDropdown();
+    let nav = await utilities.getNav();
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+      dropdown,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+invCont.addInventoryPost = async function (req, res, next) {
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body;
+  try {
+    const results = await invModel.addNewInventory(
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    );
+    const dropdown = await utilities.buildClassificationDropdown();
+    const nav = await utilities.getNav(); // corrected the model name
+    if (results) {
+      req.flash("notice", "Inventory added successfully.");
+      res.redirect("/inv/");
+    } else {
+      req.flash("error", "Failed to add inventory.");
+      res.render("inventory/add-inventory", {
+        nav,
+        dropdown,
+        title: "Add Inventory",
       });
     }
   } catch (error) {

@@ -1,0 +1,121 @@
+<h1><%- title %></h1>
+<%- messages() %>
+
+<div class="add-inventory-container">
+  <form action="/inv/add-inventory" method="post">
+    <div class="option-container">
+      <label>Classification:</label>
+      <%- dropdown %>
+    </div>
+    <label for="inv_year">Year:</label>
+    <input
+      type="number"
+      id="inv_year"
+      name="vehicle_year"
+      class="form-control"
+      value="<%= locals.inv_year %>"
+      placeholder="4-digit year"
+      required
+    />
+
+    <label for="inv_make">Make:</label>
+    <input
+      type="text"
+      id="inv_make"
+      name="inv_make"
+      class="form-control"
+      value="<%= locals.inv_make %>"
+      placeholder="Min of 3 characters"
+      required
+    />
+
+    <label for="inv_model">Model:</label>
+    <input
+      type="text"
+      id="inv_model"
+      name="inv_model"
+      class="form-control"
+      value="<%= locals.inv_model %>"
+      placeholder="Min of 3 characters"
+      required
+    />
+
+    <label for="inv_description">Description:</label><br />
+    <textarea
+      id="inv_description"
+      name="inv_description"
+      class="form-control"
+      required
+    >
+        <%= locals.inv_description || '' %></textarea
+    >
+    <br />
+    <label for="inv_image">Image Path:</label>
+    <input
+      type="text"
+      id="inv_image"
+      name="inv_image"
+      class="form-control"
+      value="<%= locals.inv_image %>"
+      placeholder="/image/vehicles/name.png"
+      required
+    />
+
+    <label for="inv_thumbnail">Thumbnail Path:</label>
+    <input
+      type="text"
+      id="inv_thumbnail"
+      name="inv_thumbnail"
+      class="form-control"
+      value="<%= locals.inv_thumbnail %>"
+      placeholder="/image/vehicles/name.png"
+      required
+    />
+
+    <label for="inv_price">price :</label>
+    <input
+      type="number"
+      id="inv_price"
+      name="inv_price"
+      class="form-control"
+      value="<%= locals.inv_price %>"
+      placeholder="decimal or interger"
+      required
+    />
+
+    <label for="inv_color">color :</label>
+    <input
+      type="color"
+      id="inv_color"
+      name="inv_color"
+      class="form-control"
+      value="<%= locals.inv_color || '#000000' %>"
+      required
+    />
+
+    <label for="inv_miles">miles :</label>
+    <input
+      type="text"
+      id="inv_miles"
+      name="inv_miles"
+      class="form-control"
+      value="<%= locals.inv_miles %>"
+      placeholder="digits or numbers"
+      required
+    />
+
+    <button type="submit" class="inventory-button">Add Inventory</button>
+  </form>
+</div>
+
+<script>
+  // Client-side validation
+  const form = document.querySelector("form");
+  form.addEventListener("submit", (event) => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add("was-validated");
+  });
+</script>

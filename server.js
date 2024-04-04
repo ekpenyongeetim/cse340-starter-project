@@ -67,6 +67,13 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use("/inv", inventoryRoute);
 
+// Redirect /inv to /inventory/management
+app.get("/inv", (req, res) => {
+  res.redirect("/inventory/management");
+});
+//testing management view, to remove later
+app.use("/inventory", require("./routes/accountRoute"));
+
 //Account routes - unit 4 activity
 app.use("/account", require("./routes/accountRoute"));
 // Error route

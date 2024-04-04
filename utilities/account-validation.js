@@ -203,4 +203,62 @@ validate.checkAddNewVehicle = async (req, res, next) => {
   next();
 };
 
+/*  **********************************
+ *  Registration Add Request Quote Data Validation Rules
+ * ********************************* */
+validate.registationRequestQuote = () => {
+  return [
+    // firstname is required and must be string
+    body("quote_firstname")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a Classification Name. Min 3 characters"), // on error this message is sent.
+
+    // lastname is required and must be string
+    body("quote_lastname")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a Classification Name. Min 3 characters"), // on error this message is sent.
+
+    // mail is required and must be string
+    body("quote_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+      .custom(async (quote_email) => {
+        const emailExists = await accountModel.checkExistingEmailQuote(
+          quote_email
+        );
+        if (emailExists) {
+          throw new Error("Email exists. Please log in or use different email");
+        }
+      }),
+  ];
+};
+
+/* ******************************
+ * Check Request Quote data and return errors or continue to registration
+ * ***************************** */
+validate.checkRequestQuote = async (req, res, next) => {
+  const { quote_firstname, quote_lastname, quote_email } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    let grid = await utilities.getQuoteVehicle();
+    res.render("account/requestQuote", {
+      errors,
+      title: "Request Quote",
+      nav,
+      grid,
+      quote_firstname,
+      quote_lastname,
+      quote_email,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;

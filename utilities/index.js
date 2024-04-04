@@ -128,7 +128,23 @@ Util.formatInventoryItemHTML = function (item) {
 //function insertSlash(url) {
 //return url.replace("/vehicles", "/vehicles/");
 //}
-
+/***
+ * build the drop down menu
+ */
+Util.buildClassificationDropdown = async function () {
+  let dropdown =
+    '<select id="classification_id" name="classification_id" class="form-control" required>' +
+    '<option value="" selected disabled>Select Classification</option>' +
+    "";
+  let classifications = await invModel.getClassifications();
+  classifications.rows.forEach((classification) => {
+    dropdown += '<option value="' + classification.classification_id + '">';
+    dropdown += classification.classification_name;
+    dropdown += "</option>";
+  });
+  dropdown += "</select>";
+  return dropdown;
+};
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for

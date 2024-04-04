@@ -26,4 +26,16 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 
+// Process the login attempt. Unity 4
+router.post("/login", (req, res) => {
+  res.status(200).send("login process");
+});
+
+/* ********************************************
+ * management view test, to remove later
+ * ************************************* */ -router.get(
+  "/management",
+  utilities.handleErrors(accountController.buildManagementview)
+);
+
 module.exports = router;

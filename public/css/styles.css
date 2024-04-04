@@ -280,6 +280,16 @@ button.clicked {
   cursor: pointer;
   font-size: 20px;
 }
+
+/*********** Manegement view***************/
+.management-container {
+  display: block;
+
+  p {
+    padding: 10px;
+    margin: 0;
+  }
+}
 /*********** Login Page***************/
 
 .login {
@@ -349,6 +359,146 @@ input:required:valid {
   border: 2px solid #32cd32; /* Green border for valid input */
   box-shadow: 0 0 5px rgba(50, 205, 50, 0.7); /* Green box shadow for valid input */
 }
+
+/*********** Add-Classification Page***************/
+
+.add-classification-form {
+  display: block;
+  margin: 0 auto;
+  width: 350px;
+  background-color: #134074;
+  border-radius: 5px;
+  border: transparent;
+  box-shadow: 0px 12px 28px 0px rgba(140, 149, 159, 0.3);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+  }
+  label {
+    text-align: left;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  input {
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    width: 100%; /* Make inputs fill their container */
+    box-sizing: border-box; /* Include padding and border in the width */
+    margin-top: 5px;
+    margin-bottom: 10px; /* Add spacing between inputs */
+  }
+
+  input:required:invalid,
+  input:focus:invalid {
+    border: 2px solid #ff6347; /* Red border for invalid input */
+    box-shadow: 0 0 5px rgba(255, 99, 71, 0.7); /* Red box shadow for invalid input */
+  }
+
+  input:required:valid {
+    border: 2px solid #32cd32; /* Green border for valid input */
+    box-shadow: 0 0 5px rgba(50, 205, 50, 0.7); /* Green box shadow for valid input */
+  }
+
+  button {
+    font-weight: bold;
+
+    padding: 5px 20px;
+    border-radius: 10px;
+    border: transparent;
+    align-self: center;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #fff;
+    color: #134074;
+    border: 2px solid #fff;
+  }
+
+  .classification-explainer {
+    font-size: small;
+    padding: 5px;
+    color: #f4e409;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+
+/*********** Add Inventory Page ***************/
+.add-inventory-container {
+  display: block;
+  margin: 0 auto;
+  width: 350px;
+  border: transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+
+  option {
+    text-align: center;
+    font-size: 0.95rem;
+    height: 40px;
+  }
+
+  .form-control {
+    height: 30px;
+  }
+  .option-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 75%;
+  }
+  form {
+    padding: 20px 30px;
+    border: 2px solid #000;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    border: 2px solid #000;
+    height: 35px;
+    width: 100%; /* Make inputs fill their container */
+    box-sizing: border-box; /* Include padding and border in the width */
+    margin-top: 5px;
+    margin-bottom: 20px; /* Add spacing between inputs */
+  }
+
+  textarea {
+    border: 2px solid #000;
+    height: 70px;
+    width: 100%; /* Make inputs fill their container */
+    box-sizing: border-box; /* Include padding and border in the width */
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+
+  button {
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: transparent;
+    background-color: #134074;
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #fff;
+    color: #134074;
+    border: 2px solid #134074;
+  }
+
+  button.clicked {
+    border: 2px solid #000;
+  }
+}
+
 /*********** Large Screen ***************/
 
 @media screen and (min-width: 700px) {

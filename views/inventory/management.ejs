@@ -1,8 +1,9 @@
 <% if (title) { %>
-<h1><%- title %></h1>
-<% } else {res.redirect('/') } %> <%# Unity 4, activity %> <%- messages() %>
-<!-- Links to add new classification and add new inventory -->
-<div class="management-container">
-  <a href="/inv/add-classification">Add New Classification</a>
-  <a href="/inv/add-inventory">Add New inventory</a>
-</div>
+<h1><%= title %></h1>
+<% } else { %> <% res.redirect('/') %> <% } %>
+<%- messages() %>
+  <div class="management-container">
+    <p><a href="/inv/add-classification">Add New Classification</a></p>
+    <p><a href="/inv/add-inventory">Add New inventory</a></p>
+  </div>
+</br%->

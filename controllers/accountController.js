@@ -26,6 +26,17 @@ async function buildRegister(req, res, next) {
 }
 
 /* ****************************************
+ *  Testing management view
+ * *************************************** */
+async function buildManagementview(req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/management", {
+    title: "Vehicle Management",
+    nav,
+  });
+}
+
+/* ****************************************
  *  Process Registration
  * *************************************** */
 async function registerAccount(req, res) {
@@ -79,4 +90,9 @@ async function registerAccount(req, res) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount };
+module.exports = {
+  buildLogin,
+  buildRegister,
+  buildManagementview,
+  registerAccount,
+};
