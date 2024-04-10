@@ -54,6 +54,26 @@ validate.registationRules = () => {
   ];
 };
 
+/*  **********************************
+ *  lOGIN Data Validation Rules
+ * ********************************* */
+validate.loginRules = () => {
+  return [
+    // Valid email is required
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required."),
+
+    // Password is required
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Password is required."),
+  ];
+};
+
 /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
@@ -73,6 +93,37 @@ validate.checkRegData = async (req, res, next) => {
     });
     return;
   }
+  next();
+};
+
+/* ******************************
+ * Check data and return errors or continue to login
+ * ***************************** */
+validate.checkLoginData = async (req, res, next) => {
+  // Extract data from the request body
+  const { account_email, account_password } = req.body;
+  // Initialize an array to store errors
+  let errors = [];
+  // Check for validation errors
+  errors = validationResult(req);
+  // If there are validation errors
+  if (!errors.isEmpty()) {
+    // Retrieve navigation data
+    let nav = await utilities.getNav();
+    // Render the login view with errors and input data
+    res.render("account/login", {
+      errors,
+      title: "Login",
+      nav,
+      account_email,
+      account_password,
+    });
+
+    // Stop further execution of middleware chain
+    return;
+  }
+
+  // If there are no validation errors, continue to the next middleware
   next();
 };
 
@@ -261,4 +312,135 @@ validate.checkRequestQuote = async (req, res, next) => {
   next();
 };
 
+/* ******************************
+ * Check data and return errors or continue to update inventory item
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  // Extract data from the request body
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+  // Initialize an array to store errors
+  let errors = [];
+  // Check for validation errors
+  errors = validationResult(req);
+  // If there are validation errors
+  if (!errors.isEmpty()) {
+    // Retrieve navigation data
+    let nav = await utilities.getNav();
+    // Render the edit inventory view with errors and input data
+    res.render("inventory/edit-inventory", {
+      errors,
+      title: "Edit Inventory", // Change the title to match the title when delivering the edit view
+      nav,
+      inv_id, // Add inv_id to the list of variables being sent back to the view
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+
+    // Stop further execution of middleware chain
+    return;
+  }
+
+  // If there are no validation errors, continue to the next middleware
+  next();
+};
+
+/*  **********************************
+ *  New Inventory Data Validation Rules
+ * ********************************* */
+validate.newInventoryRules = () => {
+  return [
+    // Make is required and must be a string
+    body("inv_make")
+      .trim()
+      .isString()
+      .notEmpty()
+      .withMessage("Please provide a valid make."),
+
+    // Model is required and must be a string
+    body("inv_model")
+      .trim()
+      .isString()
+      .notEmpty()
+      .withMessage("Please provide a valid model."),
+
+    // Year is required and must be a number
+    body("inv_year")
+      .trim()
+      .isInt()
+      .notEmpty()
+      .withMessage("Please provide a valid year."),
+
+    // Image is required and must be a string
+    body("inv_image")
+      .trim()
+      .isString()
+      .notEmpty()
+      .withMessage("Please provide a valid image path."),
+
+    // Thumbnail is required and must be a string
+    body("inv_thumbnail")
+      .trim()
+      .isString()
+      .notEmpty()
+      .withMessage("Please provide a valid thumbnail path."),
+
+    // Price is required and must be a number
+    body("inv_price")
+      .trim()
+      .isNumeric()
+      .notEmpty()
+      .withMessage("Please provide a valid price."),
+
+    // Miles is required and must be a number
+    body("inv_miles")
+      .trim()
+      .isNumeric()
+      .notEmpty()
+      .withMessage("Please provide a valid mileage."),
+
+    // Color is required and must be a string
+    body("inv_color")
+      .trim()
+      .isString()
+      .notEmpty()
+      .withMessage("Please provide a valid color."),
+  ];
+};
+
+// Middleware to check account type
+validate.checkAccountType = (req, res, next) => {
+  const { user } = req; // Assuming req.user contains information about the logged-in user's account type
+
+  // Check if the user's account type is "Employee" or "Admin"
+  if (
+    user &&
+    (user.accountType === "Employee" || user.accountType === "Admin")
+  ) {
+    // If the account type is valid, proceed to the next middleware or route handler
+    next();
+  } else {
+    // If the account type is not valid, render an error page or redirect with a message
+    res
+      .status(403)
+      .send(
+        "Access Forbidden: You do not have permission to access this resource."
+      );
+  }
+};
 module.exports = validate;

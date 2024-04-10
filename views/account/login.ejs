@@ -13,16 +13,21 @@
     />
     <br />
     <label for="account_password">Password:</label>
-    <input
-      type="password"
-      id="account_password"
-      name="account_password"
-      required
-      placeholder="Password"
-    />
+    <div class="pas-toggle-cont">
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        required
+        placeholder="Password"
+      />
 
-    <br />
+      <br />
+      <span id="pswBtn">👁️</span>
+    </div>
     <button type="submit">Login</button>
     <p class="signup">No account? <a href="/account/register">Sign-up</a></p>
   </form>
 </div>
+
+<script src="../../js/script.js"></script>

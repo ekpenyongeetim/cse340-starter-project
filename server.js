@@ -14,6 +14,7 @@ const baseController = require("./controllers/baseController");
 const session = require("express-session");
 const pool = require("./database/");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 // New require statement for the inventory route file
 const inventoryRoute = require("./routes/inventoryRoute"); // Update the file name accordingly
@@ -45,6 +46,8 @@ app.use(function (req, res, next) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cookieParser());
+app.use(utilities.checkJWTToken);
 
 /* ***********************
  * View Engine and Templates
@@ -72,7 +75,7 @@ app.get("/inv", (req, res) => {
   res.redirect("/inventory/management");
 });
 //testing management view, to remove later
-app.use("/inventory", require("./routes/accountRoute"));
+app.use("/inventory", require("./routes/inventoryRoute"));
 
 //Account routes - unit 4 activity
 app.use("/account", require("./routes/accountRoute"));

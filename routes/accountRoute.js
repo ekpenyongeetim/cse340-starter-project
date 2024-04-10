@@ -14,6 +14,14 @@ const regValidate = require("../utilities/account-validation");
  * unit 4. deliver login view activity
  * ************************************* */
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
+// Process the login request
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+);
+
 router.get(
   "/register",
   utilities.handleErrors(accountController.buildRegister)
@@ -26,16 +34,22 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 
-// Process the login attempt. Unity 4
-router.post("/login", (req, res) => {
-  res.status(200).send("login process");
-});
-
 /* ********************************************
  * management view test, to remove later
- * ************************************* */ -router.get(
+ * ************************************* */
+router.get(
   "/management",
   utilities.handleErrors(accountController.buildManagementview)
 );
+// Define the default route for account management view
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildManagement)
+);
+
+// Apply the checkAccountType middleware to routes that require it
+//router.get("/management", checkAccountType, utilities.handleErrors(accountController.buildManagementview));
+//router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement));
 
 module.exports = router;

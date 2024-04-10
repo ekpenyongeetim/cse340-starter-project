@@ -1,0 +1,58 @@
+<h1><%- title %></h1>
+<%- messages() %>
+
+<div class="add-inventory-container">
+  <form action="/inv/update" id="updateForm" method="post">
+    <div class="option-container">
+      <label for="classificationList">Classification:</label>
+      <%- classificationSelect %>
+    </div>
+    <label for="inv_year">Year:</label>
+    <input
+      type="number"
+      id="inv_year"
+      name="vehicle_year"
+      readonly
+      <%
+      if(locals.inv_year)
+      {
+      %
+    />
+    value="<%= locals.inv_year %>"<% } %>>
+
+    <label for="inv_make">Make:</label>
+    <input
+      type="text"
+      id="inv_make"
+      name="inv_make"
+      readonly
+      <%
+      if(locals.inv_make)
+      {
+      %
+    />
+    value="<%= locals.inv_make %>"<% } %>>
+
+    <label for="inv_model">Model:</label>
+    <input type="text" id="inv_model" readonly <% if(locals.inv_model) { % />
+    value="<%= locals.inv_model %>"<% } %>>
+
+    <label for="inv_price">price :</label>
+    <input
+      type="number"
+      id="inv_price"
+      name="inv_price"
+      readonly
+      <%
+      if(locals.inv_price)
+      {
+      %
+    />
+    value="<%= locals.inv_price%>"<% } %>> />
+
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { % /> value="<%=
+    locals.inv_id %>" <% } %>>
+
+    <button type="submit" class="inventory-button">Delete Vehivle</button>
+  </form>
+</div>

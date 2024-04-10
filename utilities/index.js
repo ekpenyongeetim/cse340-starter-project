@@ -1,4 +1,7 @@
 const invModel = require("../models/inventory-model");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 const Util = {};
 
 /* ************************
@@ -80,6 +83,23 @@ Util.buildClassificationGrid = async function (data) {
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
+Util.getClassificationId = async function (req, res, next) {
+  let data = await invModel.getClassifications();
+  let list =
+    "<label>Classification <br><input list='classification_id' name='classification_id' placeholder = 'Choose a Classification' autocomplete='off'></label><br><br>";
+  list += "<datalist id='classification_id'>";
+  data.rows.forEach((row) => {
+    list +=
+      "<option value=" + row.classification_id + ">" + row.classification_name;
+    list += "</option>";
+  });
+  list += "</datalist>";
+  return list;
+};
+
+/* ************************
+ * Constructs the nav HTML unordered list
+ ************************** */
 Util.getQuoteVehicle = async function (req, res, next) {
   let data = await invModel.getInventoryVehicle();
   let list =
@@ -124,10 +144,6 @@ Util.formatInventoryItemHTML = function (item) {
   return html;
 };
 
-// Function to insert a forward slash (/) between "vehicle" and "thumbnail" in the image URLs
-//function insertSlash(url) {
-//return url.replace("/vehicles", "/vehicles/");
-//}
 /***
  * build the drop down menu
  */
@@ -145,6 +161,31 @@ Util.buildClassificationDropdown = async function () {
   dropdown += "</select>";
   return dropdown;
 };
+
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        res.locals.loggedin = 1;
+        next();
+      }
+    );
+  } else {
+    next();
+  }
+};
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for
@@ -152,5 +193,44 @@ Util.buildClassificationDropdown = async function () {
  **************************************** */
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next();
+  } else {
+    req.flash("notice", "Please log in.");
+    return res.redirect("/account/login");
+  }
+};
+
+/* ****************************************
+ * Middleware to check account type
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.redirect("/account/login");
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const { accountType } = decoded;
+
+    if (accountType !== "Employee" && accountType !== "Admin") {
+      throw new UnauthorizedError(
+        "You do not have permission to access this resource."
+      );
+    }
+
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.redirect("/account/login");
+  }
+};
 
 module.exports = Util;

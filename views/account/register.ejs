@@ -26,7 +26,7 @@
       name="account_lastname"
       required
       placeholder="Last Name"
-      value="<%= locals.account_firstname %>"
+      value="<%= locals.account_lastname %>"
     />
     <br />
     <label for="account_email">Email:</label>
@@ -65,16 +65,4 @@
   </form>
 </div>
 
-<script>
-  const pswBtn = document.querySelector("#pswBtn");
-  pswBtn.addEventListener("click", function () {
-    const pswdInput = document.getElementById("account_password");
-    if (pswdInput.type === "password") {
-      pswdInput.type = "text";
-      pswBtn.textContent = "🔒";
-    } else {
-      pswdInput.type = "password";
-      pswBtn.textContent = "👁️";
-    }
-  });
-</script>
+<script src="../../js/script.js"></script>

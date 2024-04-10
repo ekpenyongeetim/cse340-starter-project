@@ -2,10 +2,10 @@
 <%- messages() %>
 
 <div class="add-inventory-container">
-  <form action="/inv/add-inventory" method="post">
+  <form action="/inv/update" id="updateForm" method="post">
     <div class="option-container">
-      <label>Classification:</label>
-      <%- dropdown %>
+      <label for="classificationList">Classification:</label>
+      <%- classificationSelect %>
     </div>
     <label for="inv_year">Year:</label>
     <input
@@ -13,32 +13,46 @@
       id="inv_year"
       name="vehicle_year"
       class="form-control"
-      value="<%= locals.inv_year %>"
       placeholder="4-digit year"
       required
+      <%
+      if(locals.inv_year)
+      {
+      %
     />
+    value="<%= locals.inv_year %>"<% } %>>
 
     <label for="inv_make">Make:</label>
     <input
       type="text"
       id="inv_make"
       name="inv_make"
-      class="form-control"
-      value="<%= locals.inv_make %>"
+      minlength="3"
       placeholder="Min of 3 characters"
       required
+      class="form-control"
+      <%
+      if(locals.inv_make)
+      {
+      %
     />
+    value="<%= locals.inv_make %>"<% } %>>
 
     <label for="inv_model">Model:</label>
     <input
       type="text"
       id="inv_model"
       name="inv_model"
-      class="form-control"
-      value="<%= locals.inv_model %>"
+      minlength="3"
       placeholder="Min of 3 characters"
       required
+      class="form-control"
+      <%
+      if(locals.inv_model)
+      {
+      %
     />
+    value="<%= locals.inv_model %>"<% } %>>
 
     <label for="inv_description">Description:</label><br />
     <textarea
@@ -46,7 +60,12 @@
       name="inv_description"
       class="form-control"
       required
-      value="<%= locals.inv_description %>"
+      <%
+      if(locals.inv_description)
+      {
+      %
+    />
+    value="<%= locals.inv_description %>"<% } %>>
     >
     </textarea>
     <br />
@@ -85,25 +104,39 @@
 
     <label for="inv_color">color :</label>
     <input
-      type="color"
+      type="text"
       id="inv_color"
       name="inv_color"
       class="form-control"
-      value="<%= locals.inv_color || '#000000' %>"
       required
+      <%
+      if(locals.inv_color)
+      {%
     />
+    value="<%= locals.inv_color %>"<%} %>> />
 
     <label for="inv_miles">miles :</label>
     <input
-      type="number"
+      type="text"
       id="inv_miles"
       name="inv_miles"
+      size="10"
       class="form-control"
-      value="<%= locals.inv_miles %>"
       placeholder="digits or numbers"
       required
+      pattern="^\d+$"
+      <%
+      if(locals.inv_miles)
+      {%
     />
+    value="<%= locals.inv_miles %>" <% } %>> />
 
-    <button type="submit" class="inventory-button">Add Inventory</button>
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { % /> value="<%=
+    locals.inv_id %>" <% } %>>
+
+    <button type="submit" class="inventory-button" disabled>
+      Update Vehivle
+    </button>
   </form>
 </div>
+<script src="../../js/inv-update.js"></script>

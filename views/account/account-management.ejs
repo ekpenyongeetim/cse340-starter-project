@@ -1,0 +1,14 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %> <%- messages() %>
+
+<div class="account-management">
+  <h1>Welcome to Your Account Management</h1>
+  <p>You're logged in.</p>
+</div>
+
+<!-- account-management.ejs -->
+
+<a href="/account/update/" title="Update Account Information"
+  >Update Account Information</a
+>
